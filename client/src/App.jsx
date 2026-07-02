@@ -4,7 +4,13 @@ import Calendar from './components/Calendar';
 import DateModal from './components/DateModal';
 import { CalendarRange, Activity, RefreshCw } from 'lucide-react';
 
-const API_BASE_URL = `http://${window.location.hostname}:3001/api`;
+const isLocal = window.location.hostname === 'localhost' || 
+                window.location.hostname === '127.0.0.1' || 
+                window.location.hostname.startsWith('192.168.');
+
+const API_BASE_URL = isLocal 
+  ? `http://${window.location.hostname}:3001/api` 
+  : `${window.location.protocol}//${window.location.host}/api`;
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState('운형');
