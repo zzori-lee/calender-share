@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  /* 커스텀 테마 색상 정의 (Tailwind v4 방식) */
+  --color-brand-blue-glow: rgba(59, 130, 246, 0.15);
+  --color-brand-orange-glow: rgba(245, 158, 11, 0.15);
+}
+
+/* 글로벌 폰트 및 기본 세팅 */
+body {
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  padding: 0;
+}
+
+/* Glassmorphism 효과 */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.dark .glass-panel {
+  background: rgba(17, 24, 39, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.dark .glass-card {
+  background: rgba(31, 41, 55, 0.45);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* 빗금 패턴 배경 (내가 양도한 날) */
+.bg-diagonal-stripes {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 8px,
+    rgba(245, 158, 11, 0.22) 8px,
+    rgba(245, 158, 11, 0.22) 16px
+  );
+  background-color: rgba(245, 158, 11, 0.05);
+}
+
+.dark .bg-diagonal-stripes {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 8px,
+    rgba(245, 158, 11, 0.25) 8px,
+    rgba(245, 158, 11, 0.25) 16px
+  );
+  background-color: rgba(245, 158, 11, 0.08);
+}
+
+/* 미세 깜빡임 효과 (상대방이 양도하여 가져가기 가능한 날 강조) */
+@keyframes soft-pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.25), inset 0 0 4px rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(245, 158, 11, 0.6), inset 0 0 8px rgba(245, 158, 11, 0.25);
+    border-color: rgba(245, 158, 11, 0.9);
+  }
+}
+
+.pulse-yellow-glow {
+  animation: soft-pulse 2s infinite ease-in-out;
+}
+
+/* 기본 커스텀 스크롤바 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.5);
+}
