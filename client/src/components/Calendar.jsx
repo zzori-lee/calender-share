@@ -148,20 +148,20 @@ export default function Calendar({
             statusText = '사용 가능';
             mobileStatusText = '사용';
           } else if (isTheirTurn) {
-            // 상대방이 사용하는 날 (차분한 차콜/그레이 톤으로 확실한 비활성 대비)
+            // 상대방이 사용하는 날 (차분한 슬레이트/그레이)
             cellClass = 'bg-slate-100/65 text-slate-400 border-slate-200 hover:border-slate-350 dark:bg-slate-900/40 dark:text-slate-500 dark:border-slate-800/80 dark:hover:border-slate-700/50 opacity-65 hover:opacity-100';
             statusText = `${current_owner} 사용 중`;
-            mobileStatusText = current_owner;
+            mobileStatusText = `${current_owner === '운형' ? '운' : '정'} 사용`;
           } else if (isTheirYield) {
-            // 상대방이 안 쓴다고 양도한 날 (가져오기 가능 - 선명한 주황색 + 강력한 맥동)
+            // 상대방이 안 쓴다고 양도한 날 (가져오기 가능)
             cellClass = 'bg-amber-100/90 text-amber-900 border-amber-400 hover:bg-amber-200 hover:border-amber-600 dark:bg-amber-950/75 dark:text-amber-100 dark:border-amber-500/70 dark:hover:bg-amber-900/60 dark:hover:border-amber-400 pulse-yellow-glow font-bold border-2';
             statusText = `${original_owner} 양도 (가져오기)`;
-            mobileStatusText = `${original_owner} 양도`;
+            mobileStatusText = '가져오기';
           } else if (isMyYield) {
             // 내가 양도한 날 (선명한 빗금 패턴 및 흐린 오렌지)
             cellClass = 'bg-diagonal-stripes text-amber-800/95 border-amber-300 dark:text-amber-300/95 dark:border-amber-800 hover:border-amber-400/80 dark:hover:border-amber-600/60 font-semibold';
             statusText = `${original_owner} 양도 완료`;
-            mobileStatusText = `${original_owner} 양도`;
+            mobileStatusText = '양도완료';
           }
 
           // 주말 텍스트 색상 분리 (그 외 상태 텍스트에 오버레이되지 않도록)
@@ -202,8 +202,8 @@ export default function Calendar({
               </div>
 
               {/* 상태 텍스트 및 변경 마크 */}
-              <div className="flex flex-col gap-0.5 items-start mt-auto w-full z-10">
-                {is_modified && (
+              <div className="flex flex-col gap-0.5 items-start mt-auto w-full z-10 pb-0.5">
+                {original_owner !== current_owner && (
                   <span className="flex items-center gap-0.5 text-[7px] sm:text-[9px] font-extrabold text-indigo-600 dark:text-indigo-400 leading-none">
                     <span className="hidden sm:inline"><ArrowLeftRight size={8} /></span> 변경됨
                   </span>
@@ -215,7 +215,7 @@ export default function Calendar({
                 </span>
                 
                 {/* 모바일 화면 텍스트 */}
-                <span className="block sm:hidden text-[9px] font-bold leading-tight truncate w-full text-center tracking-tighter">
+                <span className="block sm:hidden text-[8px] sm:text-[9px] font-black leading-none truncate w-full text-center tracking-tighter">
                   {mobileStatusText}
                 </span>
               </div>
