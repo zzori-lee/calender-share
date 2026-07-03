@@ -155,13 +155,13 @@ export default function Calendar({
           } else if (isTheirYield) {
             // 상대방이 안 쓴다고 양도한 날 (가져오기 가능 - 선명한 주황색 + 강력한 맥동)
             cellClass = 'bg-amber-100/90 text-amber-900 border-amber-400 hover:bg-amber-200 hover:border-amber-600 dark:bg-amber-950/75 dark:text-amber-100 dark:border-amber-500/70 dark:hover:bg-amber-900/60 dark:hover:border-amber-400 pulse-yellow-glow font-bold border-2';
-            statusText = '가져오기 가능';
-            mobileStatusText = '가져오기';
+            statusText = `${original_owner} 양도 (가져오기)`;
+            mobileStatusText = `${original_owner} 양도`;
           } else if (isMyYield) {
             // 내가 양도한 날 (선명한 빗금 패턴 및 흐린 오렌지)
             cellClass = 'bg-diagonal-stripes text-amber-800/95 border-amber-300 dark:text-amber-300/95 dark:border-amber-800 hover:border-amber-400/80 dark:hover:border-amber-600/60 font-semibold';
-            statusText = '양도 완료';
-            mobileStatusText = '양도';
+            statusText = `${original_owner} 양도 완료`;
+            mobileStatusText = `${original_owner} 양도`;
           }
 
           // 주말 텍스트 색상 분리 (그 외 상태 텍스트에 오버레이되지 않도록)
@@ -181,7 +181,7 @@ export default function Calendar({
               className={`group flex flex-col justify-between aspect-square p-1.5 sm:p-2.5 rounded-xl border text-left transition-all duration-300 relative cursor-pointer overflow-hidden ${cellClass}`}
             >
               {/* 날짜 번호 및 원래 주인 표시 */}
-              <div className="flex justify-between items-start w-full gap-0.5">
+              <div className="flex flex-col xs:flex-row xs:justify-between xs:items-start w-full gap-0.5">
                 <span className={`text-xs sm:text-base font-bold leading-none ${
                   isSunday && status === 'normal' && current_owner !== currentUser
                     ? 'text-red-500/80 dark:text-red-400/70' 
@@ -190,9 +190,8 @@ export default function Calendar({
                   {day}
                 </span>
 
-                {/* 원래 권한(기본값) 뱃지 */}
+                {/* 원래 권한(기본값) 뱃지 (모바일 가로 찌그러짐 방지를 위해 "기본:" 텍스트는 모바일에서 완전히 숨김) */}
                 <span className="text-[7px] sm:text-[9px] px-0.5 sm:px-1 py-0.5 rounded font-extrabold bg-black/5 dark:bg-white/5 text-gray-500 dark:text-gray-400 transition-colors leading-none truncate">
-                  <span className="hidden xs:inline sm:hidden">기:</span>
                   <span className="hidden sm:inline">기본:</span>
                   {original_owner}
                 </span>
