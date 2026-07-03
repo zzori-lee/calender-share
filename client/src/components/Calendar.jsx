@@ -178,10 +178,10 @@ export default function Calendar({
                 e.stopPropagation();
                 handleDayClick(day);
               }}
-              className={`group flex flex-col justify-between aspect-square p-1.5 sm:p-2.5 rounded-xl border text-left transition-all duration-300 relative cursor-pointer overflow-hidden ${cellClass}`}
+              className={`group flex flex-col justify-between aspect-square p-1 sm:p-2 rounded-xl border text-left transition-all duration-300 relative cursor-pointer overflow-hidden ${cellClass}`}
             >
-              {/* 날짜 번호 및 원래 주인 표시 */}
-              <div className="flex flex-col xs:flex-row xs:justify-between xs:items-start w-full gap-0.5">
+              {/* 날짜 번호 및 현재 소유자 표시 */}
+              <div className="flex flex-col xs:flex-row xs:justify-between xs:items-center w-full gap-0.5">
                 <span className={`text-xs sm:text-base font-bold leading-none ${
                   isSunday && status === 'normal' && current_owner !== currentUser
                     ? 'text-red-500/80 dark:text-red-400/70' 
@@ -190,10 +190,14 @@ export default function Calendar({
                   {day}
                 </span>
 
-                {/* 원래 권한(기본값) 뱃지 (모바일 가로 찌그러짐 방지를 위해 "기본:" 텍스트는 모바일에서 완전히 숨김) */}
-                <span className="text-[7px] sm:text-[9px] px-0.5 sm:px-1 py-0.5 rounded font-extrabold bg-black/5 dark:bg-white/5 text-gray-500 dark:text-gray-400 transition-colors leading-none truncate">
-                  <span className="hidden sm:inline">기본:</span>
-                  {original_owner}
+                {/* 현재 소유자 뱃지 (가져가서 바뀐 경우 인디고 강조 테두리 적용) */}
+                <span className={`text-[7px] sm:text-[9px] px-0.5 sm:px-1 py-0.5 rounded font-extrabold transition-colors leading-none truncate ${
+                  original_owner !== current_owner
+                    ? 'bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20'
+                    : 'bg-black/5 dark:bg-white/5 text-gray-500 dark:text-gray-400'
+                }`}>
+                  <span className="hidden sm:inline">{original_owner !== current_owner ? '소유:' : '기본:'}</span>
+                  {current_owner}
                 </span>
               </div>
 
