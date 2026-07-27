@@ -93,9 +93,14 @@ function getOriginalOwner(dateString) {
 
 // 특정 월의 모든 날짜 상태 가져오기
 async function getSchedulesForMonth(yearMonth) {
-  // SQLite 및 PostgreSQL(Supabase) 양쪽 모두에서 100% 정확히 작동하는 substr 방식 사용
-  const sql = `SELECT * FROM schedules WHERE substr(date, 1, 7) = ?`;
-  const rows = await query(sql, [yearMonth]);
+  const [year, month] = yearMonth.split('-').map(Number);
+  const lastDay = new Date(year, month, 0).getDate();
+  const startDate = `${yearMonth}-01`;
+  const endDate = `${yearMonth}-${String(lastDay).padStart(2, '0')}`;
+
+  // SQLite 및 PostgreSQL(Supabase) 양쪽 모두에서 100% 에러 없이 표준으로 동작하는 범위 검색 사용
+  const sql = `SELECT * FROM schedules WHERE date >= ? AND date <= ?`;
+  const rows = await query(sql, [startDate, endDate]);
 
   // 저장된 변경 사항 맵 생성
   const dbSchedules = {};
