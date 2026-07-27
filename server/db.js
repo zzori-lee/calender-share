@@ -260,6 +260,16 @@ async function resetSchedule(date) {
   };
 }
 
+async function getAllSchedules() {
+  try {
+    const rows = await query(`SELECT * FROM schedules`);
+    return rows || [];
+  } catch (err) {
+    console.error('Error fetching all schedules:', err.message);
+    return [];
+  }
+}
+
 module.exports = {
   initDatabase,
   getSchedulesForMonth,
@@ -267,4 +277,5 @@ module.exports = {
   yieldSchedule,
   claimSchedule,
   resetSchedule,
+  getAllSchedules,
 };

@@ -6,6 +6,7 @@ const {
   yieldSchedule,
   claimSchedule,
   resetSchedule,
+  getAllSchedules,
 } = require('./db');
 
 const app = express();
@@ -114,6 +115,16 @@ app.get('/api/schedules/stream', (req, res) => {
     clients = clients.filter((client) => client.id !== clientId);
     console.log(`Client ${clientId} disconnected. Total clients: ${clients.length}`);
   });
+});
+
+// 전체 DB 스케줄 진단 엔드포인트
+app.get('/api/debug/all', async (req, res) => {
+  try {
+    const data = await getAllSchedules();
+    res.json({ total_count: data.length, records: data });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 const path = require('path');
