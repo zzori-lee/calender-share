@@ -25,19 +25,18 @@ function broadcastUpdate() {
   });
 }
 
-// 1. 특정 월의 스케줄 목록 조회 API
+// 1.// 특정 월의 스케줄 조회 API
 app.get('/api/schedules', async (req, res) => {
-  const { month } = req.query; // YYYY-MM
-  if (!month || !/^\d{4}-\d{2}$/.test(month)) {
-    return res.status(400).json({ error: '올바른 month 형식(YYYY-MM)이 필요합니다.' });
-  }
-
   try {
+    const { month } = req.query;
+    if (!month) {
+      return res.status(400).json({ error: 'month 파라미터가 필요합니다. (예: 2026-07)' });
+    }
     const schedules = await getSchedulesForMonth(month);
     res.json(schedules);
-  } catch (err) {
-    console.error('Error fetching schedules:', err);
-    res.status(500).json({ error: '데이터를 가져오는 중 오류가 발생했습니다.' });
+  } catch (error) {
+    console.error('Error fetching schedules:', error);
+    res.status(500).json({ error: error.message || '데이터를 가져오는 중 오류가 발생했습니다.', details: String(error) });
   }
 });
 
