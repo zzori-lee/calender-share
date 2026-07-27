@@ -13,6 +13,7 @@ if (isPg) {
   console.log('Using PostgreSQL database connection.');
   pgPool = new Pool({
     connectionString: connectionString,
+    connectionTimeoutMillis: 5000,
     ssl: {
       rejectUnauthorized: false // Supabase 및 Neon 연결용 SSL 활성화
     }

@@ -129,13 +129,11 @@ app.get('*', (req, res, next) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-// DB 초기화 후 서버 실행 (재시작용)
-initDatabase()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error('Failed to initialize database, server starting aborted.', err);
-  });
+// Express 서버 즉시 가동 (DB 연결 지연 시에도 웹사이트 무한 펜딩 방지)
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+initDatabase().catch((err) => {
+  console.error('Failed to initialize database:', err);
+});
